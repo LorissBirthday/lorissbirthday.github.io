@@ -2,37 +2,37 @@
 const DISABLE_TIME_LOCK = true; // Mettre à false pour activer le système de temps
 const START_DATE = new Date('2024-08-02');
 const END_DATE = new Date('2024-08-28');
-const UNLOCK_HOUR = 7; // 7h du matin
+const UNLOCK_HOUR = 10; // 10h du matin
 
 // Indices mystérieux pour chaque jour (très subtils pour ne pas révéler le cadeau)
 const hints = {
-    1: "Un voyage commence toujours par le premier pas... vers quelque chose d'exceptionnel. 🌟",
-    2: "Les étoiles brillent plus fort quand on partage leur lumière avec quelqu'un de spécial. ✨",
-    3: "Certains moments méritent d'être célébrés avec raffinement et élégance. 🥂",
-    4: "La beauté se trouve dans les détails les plus précieux de la vie. 💎",
-    5: "Un secret se cache dans la ville lumière, là où les rêves prennent vie. 🏙️",
-    6: "Les plus belles choses naissent de la passion et de l'art culinaire. 👨‍🍳",
-    7: "Quand l'excellence rencontre la tradition, la magie opère. ⭐",
-    8: "Certaines expériences ne se vivent qu'une fois dans une vie... ou presque. 🌹",
-    9: "L'art de sublimer l'ordinaire en extraordinaire est un don rare. 🎭",
-    10: "Les mets les plus fins racontent des histoires d'amour et de dévotion. 💕",
-    11: "Dans un écrin de sophistication, les sens s'éveillent pleinement. 🌺",
-    12: "La perfection se cache parfois derrière des portes très sélectives. 🚪",
-    13: "Un maître de son art sait transformer les ingrédients en poésie. 🎨",
-    14: "Les moments les plus précieux se savourent lentement, ensemble. ⏰",
-    15: "Quand la nature inspire l'artisan, naît quelque chose d'unique. 🌸",
-    16: "L'or capture la lumière comme certains lieux capturent les cœurs. ✨",
-    17: "Dans le jardin des délices, chaque pétale a sa place. 🌻",
-    18: "Les créations les plus délicates demandent patience et savoir-faire. 🤲",
-    19: "Un symbole éternel de beauté prend racine dans la terre des rêves. 🌱",
-    20: "L'élégance danoise rencontre l'art français dans une danse subtile. 💃",
-    21: "Certaines formes parlent le langage universel de l'amour. 💖",
-    22: "Quand l'artisanat devient art, la magie s'épanouit littéralement. 🌿",
-    23: "Les plus beaux bijoux de la nature inspirent les plus grands créateurs. 🌷",
-    24: "Dans l'écrin de la nuit parisienne, tout devient possible. 🌙",
-    25: "La beauté dorée illumine le chemin vers les plus doux souvenirs. ☀️",
-    26: "Un pétale doré pour sceller un moment d'éternité. 🌺",
-    27: "Demain, tous les mystères se révéleront dans la lumière de l'amour. 💫"
+    1: "Ce n’est pas un voyage… et pourtant, d’une certaine manière, ça y ressemble.",
+    2: "Les étoiles brillent plus fort quand on partage leur lumière avec quelqu'un de spécial.",
+    3: "Certains moments méritent d'être célébrés avec raffinement et élégance.",
+    4: "La beauté se trouve dans les petits détails...",
+    5: "Rien n'a été fait au hasard, j’ai simplement écouté ce que tu aimes, et tout est parti de là.",
+    6: "Ce que je te réserve n’a pas besoin de mots, juste ton sourire !",
+    7: "Quand l'excellence rencontre la tradition, la magie opère.",
+    8: "Ce genre d’expérience ne se vit pas tous les jours… et c’est pour très bientôt !",
+    9: "L'art de sublimer l'ordinaire en extraordinaire est un don rare.",
+    10: "Tu sais combien les petites attentions romantiques me tiennent à cœur…",
+    11: "Il y a des cadeaux qui font sourire… celui-ci devrait faire un peu plus.",
+    12: "Dans certaines petites rues tranquilles, la perfection mijote en silence…",
+    13: "Un maître dans son art sait sublimer les choses du quotidien en créations sophistiquées.",
+    14: "Les moments les plus précieux se savourent lentement, ensemble.",
+    15: "Il paraît que certaines étoiles se dégustent… d'autres se portent tout près du cœur.",
+    16: "Il y a des instants créés sur mesure, juste pour toi.",
+    17: "Dans le jardin des délices, chaque pétale a sa place.",
+    18: "Le 28 au soir, les étoiles t’attendent...",
+    19: "Une expérience, un détail, un souvenir : tout est réuni.",
+    20: "L'élégance danoise rencontre l'art français dans une danse subtile.",
+    21: "Tu comprendras très bientôt tout en deux temps. Littéralement.",
+    22: "Quand l'artisanat devient art, la magie s'épanouit littéralement.",
+    23: "Les plus beaux bijoux de la nature inspirent les plus grands créateurs.",
+    24: "Dans l'écrin de la nuit parisienne, tout devient possible.",
+    25: "J'ai pensé à tout, pour marquer ton cadeau d’une saveur particulière...",
+    26: "Deux univers te font une promesse demain : l’un éveille les sens, l’autre touche le cœur.",
+    27: "Ce soir, tout a été choisi pour faire scintiller ce que tu es."
 };
 
 // Icônes pour chaque jour
