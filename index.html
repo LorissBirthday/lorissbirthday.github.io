@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendrier d'anniversaire de Loris✨</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1 class="main-title">
+                <span class="heart">💖</span>
+                En route vers ton cadeau !
+                <span class="heart">💖</span>
+            </h1>
+            <p class="subtitle">Chaque jour, un nouvel indice t'attend...</p>
+            <div class="floating-hearts">
+                <div class="heart-float">💗</div>
+                <div class="heart-float">💕</div>
+                <div class="heart-float">💖</div>
+            </div>
+        </header>
+
+        <div class="calendar-grid">
+            <!-- Les cases seront générées par JavaScript -->
+        </div>
+
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2 class="modal-title">Jour <span id="modal-day"></span></h2>
+                <div class="modal-body">
+                    <div class="hint-content" id="hint-content"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="confetti-container" id="confetti-container"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

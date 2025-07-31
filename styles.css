@@ -1,0 +1,474 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('20674728.jpg') center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #d63384;
+    text-shadow: 3px 3px 6px rgba(214, 51, 132, 0.3);
+    margin-bottom: 10px;
+    animation: titleGlow 3s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+    from {
+        text-shadow: 3px 3px 6px rgba(214, 51, 132, 0.3);
+    }
+    to {
+        text-shadow: 3px 3px 20px rgba(214, 51, 132, 0.6), 0 0 30px rgba(255, 182, 193, 0.4);
+    }
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    color: #8e2463;
+    font-weight: 300;
+    margin-bottom: 20px;
+}
+
+.heart {
+    animation: heartBeat 1.5s ease-in-out infinite;
+    display: inline-block;
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.floating-hearts {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 200px;
+    pointer-events: none;
+}
+
+.heart-float {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: float 8s ease-in-out infinite;
+    opacity: 0.4;
+}
+
+.heart-float:nth-child(1) { left: 15%; animation-delay: 0s; }
+.heart-float:nth-child(2) { right: 20%; animation-delay: 3s; }
+.heart-float:nth-child(3) { left: 60%; animation-delay: 6s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-20px) rotate(5deg); }
+    66% { transform: translateY(-10px) rotate(-5deg); }
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 20px;
+    margin: 40px 0;
+}
+
+.calendar-day {
+    aspect-ratio: 1;
+    background: linear-gradient(145deg, #ffffff, #f8f9fa);
+    border: 3px solid transparent;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 
+        8px 8px 20px rgba(214, 51, 132, 0.1),
+        -8px -8px 20px rgba(255, 255, 255, 0.7),
+        inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+}
+
+.calendar-day::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(145deg, transparent, rgba(255, 182, 193, 0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.calendar-day:hover::before {
+    opacity: 1;
+}
+
+.calendar-day.unlocked {
+    background: linear-gradient(145deg, #ffb6c1, #ffc0cb);
+    border-color: #ff69b4;
+    cursor: pointer;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.calendar-day.unlocked:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 
+        12px 20px 30px rgba(214, 51, 132, 0.2),
+        -8px -8px 20px rgba(255, 255, 255, 0.9),
+        inset 2px 2px 6px rgba(255, 255, 255, 0.5);
+}
+
+.calendar-day.locked {
+    background: linear-gradient(145deg, #e9ecef, #f8f9fa);
+    border-color: #dee2e6;
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.calendar-day.opened {
+    background: linear-gradient(145deg, #ffd700, #ffed4e);
+    border-color: #ffc107;
+    animation: sparkle 3s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(255, 105, 180, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(255, 105, 180, 0); }
+}
+
+@keyframes sparkle {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(1deg) scale(1.02); }
+    75% { transform: rotate(-1deg) scale(0.98); }
+}
+
+.day-number {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #8e2463;
+    margin-bottom: 5px;
+}
+
+.day-icon {
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+}
+
+.day-status {
+    font-size: 0.8rem;
+    font-weight: 300;
+    color: #8e2463;
+    text-align: center;
+}
+
+.lock-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.2rem;
+    color: #6c757d;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal-content {
+    background: linear-gradient(145deg, #ffffff, #fdf7f7);
+    margin: 5% auto;
+    padding: 30px;
+    border: none;
+    border-radius: 25px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 
+        0 20px 60px rgba(214, 51, 132, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    animation: modalSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Confetti Animation */
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 99999;
+}
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #ff69b4;
+    animation: confetti-fall 3s linear infinite;
+    opacity: 1;
+    transition: opacity 0.5s ease-out;
+}
+
+.confetti.fade-out {
+    opacity: 0;
+}
+
+.confetti:nth-child(odd) {
+    animation-duration: 3s;
+    animation-delay: 0s;
+}
+
+.confetti:nth-child(even) {
+    animation-duration: 2.5s;
+    animation-delay: 0.5s;
+}
+
+.confetti.square {
+    width: 8px;
+    height: 8px;
+    background: #ffd700;
+}
+
+.confetti.triangle {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 8px solid #d63384;
+    background: transparent;
+}
+
+.confetti.circle {
+    border-radius: 50%;
+    background: #ffb6c1;
+}
+
+.confetti.heart::before {
+    content: '💖';
+    font-size: 12px;
+    position: absolute;
+    top: -6px;
+    left: -6px;
+}
+
+@keyframes confetti-fall {
+    0% {
+        transform: translateY(-20px) rotateZ(0deg);
+        opacity: 1;
+    }
+    85% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(110vh) rotateZ(720deg);
+        opacity: 0;
+    }
+}
+
+/* Birthday Banner Animation */
+.birthday-banner {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100000;
+    background: linear-gradient(45deg, #ff69b4, #ffd700, #ff1493, #ffb6c1);
+    background-size: 400% 400%;
+    animation: rainbow-gradient 2s ease-in-out infinite;
+    padding: 15px 30px;
+    border-radius: 25px;
+    box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
+    border: 3px solid #ffffff;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.birthday-banner.show {
+    opacity: 1;
+    visibility: visible;
+    animation: rainbow-gradient 2s ease-in-out infinite, banner-bounce 1s ease-out;
+}
+
+.birthday-banner.restart {
+    animation: rainbow-gradient 2s ease-in-out infinite, banner-bounce 1s ease-out, banner-pulse 0.5s ease-in-out;
+}
+
+.birthday-text {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    margin: 0;
+    letter-spacing: 2px;
+    animation: text-glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes rainbow-gradient {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes banner-bounce {
+    0% {
+        transform: translateX(-50%) translateY(-100px) scale(0.5);
+    }
+    50% {
+        transform: translateX(-50%) translateY(10px) scale(1.1);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0) scale(1);
+    }
+}
+
+@keyframes banner-pulse {
+    0% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.1); }
+    100% { transform: translateX(-50%) scale(1); }
+}
+
+@keyframes text-glow {
+    from {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 255, 255, 0.5);
+    }
+    to {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 105, 180, 0.6);
+    }
+}
+
+.close {
+    color: #8e2463;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.close:hover {
+    color: #d63384;
+    transform: scale(1.2);
+}
+
+.modal-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #d63384;
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(214, 51, 132, 0.2);
+}
+
+.hint-content {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #5a5a5a;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(145deg, rgba(255, 182, 193, 0.1), rgba(255, 192, 203, 0.1));
+    border-radius: 15px;
+    border: 2px solid rgba(255, 105, 180, 0.2);
+    position: relative;
+}
+
+.hint-content::before {
+    content: '✨';
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    background: white;
+    padding: 0 10px;
+    font-size: 1.2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-title {
+        font-size: 2.5rem;
+    }
+    
+    .calendar-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 15px;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 20px;
+    }
+    
+    .modal-title {
+        font-size: 2rem;
+    }
+}
