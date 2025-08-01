@@ -1,7 +1,7 @@
 // Configuration
 const DISABLE_TIME_LOCK = false; // Mettre à false pour activer le système de temps
-const START_DATE = new Date('2025-08-02');
-const END_DATE = new Date('2025-08-28');
+const START_DATE = new Date('2024-08-02');
+const END_DATE = new Date('2024-08-28');
 const UNLOCK_HOUR = 10; // 10h du matin
 
 const hints = {
@@ -208,14 +208,15 @@ function openDay(day) {
         dayElement.classList.add('opened');
         dayElement.querySelector('.day-status').textContent = 'Ouvert ✅';
         
-        // Lancer des confettis de cœurs
-        launchHeartConfetti();
-        
-        // Lancer l'effet de confetti pour le premier jour
-        if (day === 1) {
-            launchConfetti();
-            showBirthdayBanner();
-        }
+        // ...existing code...
+    }
+    // Lancer des confettis de cœurs à chaque clic, même si déjà ouvert
+    launchHeartConfetti();
+    launchHeartConfetti();
+    // Pour le jour 1 (2 août), lancer l'animation de confettis et le bandeau à chaque clic
+    if (day === 1) {
+        launchConfetti();
+        showBirthdayBanner();
     }
 }
 
@@ -252,11 +253,6 @@ function launchConfetti() {
             }, i * 25);
         }
     }, 3000);
-
-    // Nettoyer après 10 secondes
-    setTimeout(() => {
-        container.innerHTML = '';
-    }, 10000);
 }
 
 function showBirthdayBanner() {

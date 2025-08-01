@@ -274,11 +274,13 @@ body::before {
     background: #ff69b4;
     animation: confetti-fall 3s linear infinite;
     opacity: 1;
-    transition: opacity 0.5s ease-out;
+    /* Transition plus douce sur la disparition */
+    transition: opacity 1.2s ease-out;
 }
 
 .confetti.fade-out {
     opacity: 0;
+    /* La disparition sera fluide grâce à la transition définie ci-dessus */
 }
 
 .confetti:nth-child(odd) {
