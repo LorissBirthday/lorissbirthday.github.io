@@ -1,7 +1,8 @@
 // Configuration
 const DISABLE_TIME_LOCK = false; // Mettre à false pour activer le système de temps
-const START_DATE = new Date('2025-08-02');
-const END_DATE = new Date('2025-08-28');
+// Utilisation de Date(year, monthIndex, day) pour s'assurer de 00h locale et éviter les problèmes UTC
+const START_DATE = new Date(2025, 7, 2); // 2 août 2025
+const END_DATE = new Date(2025, 7, 28); // 28 août 2025
 const UNLOCK_HOUR = 10; // 10h du matin
 
 const hints = {
