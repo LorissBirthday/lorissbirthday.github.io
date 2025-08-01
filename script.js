@@ -1,38 +1,37 @@
 // Configuration
-const DISABLE_TIME_LOCK = true; // Mettre à false pour activer le système de temps
-const START_DATE = new Date('2024-08-02');
-const END_DATE = new Date('2024-08-28');
+const DISABLE_TIME_LOCK = false; // Mettre à false pour activer le système de temps
+const START_DATE = new Date('2025-08-02');
+const END_DATE = new Date('2025-08-28');
 const UNLOCK_HOUR = 10; // 10h du matin
 
-// Indices mystérieux pour chaque jour (très subtils pour ne pas révéler le cadeau)
 const hints = {
     1: "Ce n’est pas un voyage… et pourtant, d’une certaine manière, ça y ressemble.",
     2: "Les étoiles brillent plus fort quand on partage leur lumière avec quelqu'un de spécial.",
     3: "Certains moments méritent d'être célébrés avec raffinement et élégance.",
     4: "La beauté se trouve dans les petits détails...",
-    5: "Rien n'a été fait au hasard, j’ai simplement écouté ce que tu aimes, et tout est parti de là.",
+    5: "Rien n'a été fait au hasard, j’ai simplement écouté ce que tu aimes, et tout est parti de là.\nJOYEUX 2 MOIS MON AMOUR !!",
     6: "Ce que je te réserve n’a pas besoin de mots, juste ton sourire !",
-    7: "Quand l'excellence rencontre la tradition, la magie opère.",
+    7: "Tes sens ne vont pas rester indifférents à ce qui t’attend...",
     8: "Ce genre d’expérience ne se vit pas tous les jours… et c’est pour très bientôt !",
     9: "L'art de sublimer l'ordinaire en extraordinaire est un don rare.",
     10: "Tu sais combien les petites attentions romantiques me tiennent à cœur…",
     11: "Il y a des cadeaux qui font sourire… celui-ci devrait faire un peu plus.",
-    12: "Dans certaines petites rues tranquilles, la perfection mijote en silence…",
-    13: "Un maître dans son art sait sublimer les choses du quotidien en créations sophistiquées.",
-    14: "Les moments les plus précieux se savourent lentement, ensemble.",
-    15: "Il paraît que certaines étoiles se dégustent… d'autres se portent tout près du cœur.",
+    12: "Ce que j'ai prévu pour toi, c'est une véritable immersion dans un univers de raffinement...",
+    13: "Laisse-toi porter… tes sens sauront te guider !",
+    14: "Les moments les plus précieux de la vie se savourent lentement, ensemble.",
+    15: "Ce que je vais t’offrir touche à la fois les sens et le cœur !",
     16: "Il y a des instants créés sur mesure, juste pour toi.",
     17: "Dans le jardin des délices, chaque pétale a sa place.",
-    18: "Le 28 au soir, les étoiles t’attendent...",
+    18: "Je sais que tu as fait beaucoup de latin au lycée... alors j'ai voulu y faire un petit clin d'œil !",
     19: "Une expérience, un détail, un souvenir : tout est réuni.",
-    20: "L'élégance danoise rencontre l'art français dans une danse subtile.",
-    21: "Tu comprendras très bientôt tout en deux temps. Littéralement.",
-    22: "Quand l'artisanat devient art, la magie s'épanouit littéralement.",
-    23: "Les plus beaux bijoux de la nature inspirent les plus grands créateurs.",
+    20: "Ce cadeau ne parle pas fort, mais il en dit long...",
+    21: "Tu comprendras très bientôt que tout se passe en deux temps. Littéralement.",
+    22: "Tu crois deviner, et pourtant, tu n’es pas encore au bout de tes surprises.",
+    23: "Chaque détail de ce cadeau a été choisi avec toi en tête.",
     24: "Dans l'écrin de la nuit parisienne, tout devient possible.",
     25: "J'ai pensé à tout, pour marquer ton cadeau d’une saveur particulière...",
     26: "Deux univers te font une promesse demain : l’un éveille les sens, l’autre touche le cœur.",
-    27: "Ce soir, tout a été choisi pour faire scintiller ce que tu es."
+    27: "Ce soir, tout a été choisi pour faire scintiller ce que tu es !"
 };
 
 // Icônes pour chaque jour
@@ -63,9 +62,12 @@ function createDayElement(day) {
     const targetDate = new Date(START_DATE);
     targetDate.setDate(START_DATE.getDate() + day - 1);
     
+    // Le premier jour (2 août) se déverrouille à 00h, les autres à 10h
+    const unlockHour = day === 1 ? 0 : UNLOCK_HOUR;
+    
     const isUnlocked = DISABLE_TIME_LOCK || (
         currentDate >= targetDate && 
-        (currentDate.getDate() !== targetDate.getDate() || currentDate.getHours() >= UNLOCK_HOUR)
+        (currentDate.getDate() !== targetDate.getDate() || currentDate.getHours() >= unlockHour)
     );
     
     const isOpened = openedDays.includes(day);
@@ -78,10 +80,23 @@ function createDayElement(day) {
         dayDiv.classList.add('locked');
     }
     
+    // Calculer le temps restant pour les jours verrouillés
+    let statusText = '';
+    if (isOpened) {
+        statusText = 'Ouvert ✅';
+    } else if (isUnlocked) {
+        statusText = 'Disponible';
+    } else {
+        const timeUntilUnlock = getTimeUntilUnlock(day);
+        statusText = timeUntilUnlock;
+    }
+    
     dayDiv.innerHTML = `
-        <div class="day-number">${day}</div>
-        <div class="day-icon">${dayIcons[day - 1]}</div>
-        <div class="day-status">${isOpened ? 'Ouvert ✅' : isUnlocked ? 'Disponible' : 'Verrouillé'}</div>
+        <div class="day-number">
+            <div style="font-size: 0.7rem; font-weight: 300; margin-bottom: 5px;">août</div>
+            <div style="font-size: 2rem; font-weight: 600;">${day + 1}</div>
+        </div>
+        <div class="day-status">${statusText}</div>
         ${!isUnlocked ? '<div class="lock-icon">🔒</div>' : ''}
     `;
     
@@ -99,6 +114,34 @@ function createDayElement(day) {
     return dayDiv;
 }
 
+function getTimeUntilUnlock(day) {
+    const now = new Date();
+    const unlockDate = new Date(START_DATE);
+    unlockDate.setDate(START_DATE.getDate() + day - 1);
+    
+    // Le premier jour (2 août) se déverrouille à 00h, les autres à 10h
+    const unlockHour = day === 1 ? 0 : UNLOCK_HOUR;
+    unlockDate.setHours(unlockHour, 0, 0, 0);
+    
+    const timeDiff = unlockDate - now;
+    
+    if (timeDiff <= 0) {
+        return 'Disponible';
+    }
+    
+    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+    
+    if (days > 0) {
+        return `${days}j ${hours}h`;
+    } else if (hours > 0) {
+        return `${hours}h ${minutes}m`;
+    } else {
+        return `${minutes}m`;
+    }
+}
+
 function getTimeUntilNextUnlock(currentDay) {
     if (currentDay >= 27) {
         return null; // Dernier jour ou au-delà
@@ -108,7 +151,10 @@ function getTimeUntilNextUnlock(currentDay) {
     const nextDay = currentDay + 1;
     const nextUnlockDate = new Date(START_DATE);
     nextUnlockDate.setDate(START_DATE.getDate() + nextDay - 1);
-    nextUnlockDate.setHours(UNLOCK_HOUR, 0, 0, 0);
+    
+    // Le premier jour (2 août) se déverrouille à 00h, les autres à 10h
+    const unlockHour = nextDay === 1 ? 0 : UNLOCK_HOUR;
+    nextUnlockDate.setHours(unlockHour, 0, 0, 0);
     
     const timeDiff = nextUnlockDate - now;
     
@@ -122,33 +168,17 @@ function getTimeUntilNextUnlock(currentDay) {
 
 function getFooterMessage(day) {
     if (day === 27) {
-        return '✨ Demain est le grand jour ! ✨';
+        return "✨ Aujourd'hui est le grand jour hihi ! ✨";
     }
     
     const hoursUntilNext = getTimeUntilNextUnlock(day);
-    
     if (hoursUntilNext === null) {
-        // Vérifier si tous les jours suivants sont déjà ouverts
-        const allOpened = Array.from({length: 27 - day}, (_, i) => day + 1 + i)
-            .every(d => openedDays.includes(d));
-        
-        if (allOpened) {
-            const messages = [
-                '💖 Tu as découvert tous les indices ! Tu es une vraie détective de l\'amour ! 💖',
-                '🌟 Félicitations ma chérie ! Tous les secrets sont révélés ! 🌟',
-                '💕 Quelle aventure merveilleuse ! Tu as tout exploré ! 💕',
-                '✨ Bravo mon cœur ! Tu as percé tous les mystères ! ✨'
-            ];
-            return messages[Math.floor(Math.random() * messages.length)];
-        } else {
-            return '💝 La suite t\'attend déjà ! Explore les autres jours ! 💝';
-        }
+        return 'Le prochain jour est déjà déverrouillé ! 🎉';
     }
-    
     if (hoursUntilNext === 1) {
-        return '⏰ Plus qu\'1 heure avant le prochain indice ! 💕';
+        return 'Plus qu\'1 heure avant le prochain indice ! 💕';
     } else {
-        return `⏰ Plus que ${hoursUntilNext} heures avant le prochain indice ! 💕`;
+        return `Plus que ${hoursUntilNext} heures avant le prochain indice ! 💕`;
     }
 }
 
@@ -157,9 +187,8 @@ function openDay(day) {
     const modalDay = document.getElementById('modal-day');
     const hintContent = document.getElementById('hint-content');
     
-    modalDay.textContent = day;
+    modalDay.textContent = `${day + 1} août`;
     hintContent.innerHTML = `
-        <div style="font-size: 3rem; margin-bottom: 20px;">${dayIcons[day - 1]}</div>
         <p>${hints[day]}</p>
         <div style="margin-top: 20px; font-style: italic; color: #d63384;">
             ${getFooterMessage(day)}
@@ -437,9 +466,9 @@ function welcomeAnimation() {
 
 // Initialisation
 document.addEventListener('DOMContentLoaded', () => {
-    // Nettoyage du cache pour les tests - toutes les cases redeviennent fermées
-    localStorage.removeItem('openedDays');
-    openedDays = [];
+    // Le localStorage est conservé pour maintenir la progression
+    // localStorage.removeItem('openedDays'); // Ligne désactivée pour conserver la progression
+    // openedDays = []; // Ligne désactivée pour conserver la progression
     
     initCalendar();
     setupModal();
@@ -447,30 +476,79 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Ajouter un message spécial pour le dernier jour
     const today = new Date();
-    const birthday = new Date('2024-08-28');
+    const birthday = new Date('2025-08-28');
     
     if (today.toDateString() === birthday.toDateString()) {
         setTimeout(() => {
-            alert('🎉 JOYEUX ANNIVERSAIRE LORI ! 🎉\n\nTon cadeau t\'attend... ✨');
+            alert("C'est le jour J, j'ai tellement hâte de t'offrir ce que j'ai à t'offrir !");
         }, 3000);
     }
 });
 
-// Fonction pour réinitialiser le calendrier (pour les tests)
 function resetCalendar() {
     localStorage.removeItem('openedDays');
     location.reload();
 }
 
+function testUnlockSystem() {
+    console.log('🧪 Test du système de verrouillage automatique');
+    console.log('================================================');
+    
+    const now = new Date();
+    console.log(`📅 Date actuelle : ${now.toLocaleString('fr-FR')}`);
+    console.log(`🕐 Heure de déverrouillage standard : ${UNLOCK_HOUR}h00`);
+    console.log(`🌅 Heure de déverrouillage du premier jour : 00h00`);
+    console.log('');
+    
+    // Tester les 5 premiers jours
+    for (let day = 1; day <= 5; day++) {
+        const targetDate = new Date(START_DATE);
+        targetDate.setDate(START_DATE.getDate() + day - 1);
+        
+        const unlockHour = day === 1 ? 0 : UNLOCK_HOUR;
+        const unlockDate = new Date(targetDate);
+        unlockDate.setHours(unlockHour, 0, 0, 0);
+        
+        const isUnlocked = now >= unlockDate;
+        const timeUntilUnlock = getTimeUntilUnlock(day);
+        
+        console.log(`📦 Jour ${day} (${day + 1} août 2025)`);
+        console.log(`   📍 Date de déverrouillage : ${unlockDate.toLocaleString('fr-FR')}`);
+        console.log(`   🔓 État : ${isUnlocked ? '✅ DÉVERROUILLÉ' : '🔒 VERROUILLÉ'}`);
+        console.log(`   ⏱️  Temps restant : ${timeUntilUnlock}`);
+        console.log('');
+    }
+    
+    // Test spécifique pour le premier jour
+    const firstDayUnlock = new Date(START_DATE);
+    firstDayUnlock.setHours(0, 0, 0, 0);
+    console.log(`🎯 Test spécial premier jour :`);
+    console.log(`   Le 2 août 2025 à 00h00 : ${now >= firstDayUnlock ? '✅ ACCESSIBLE' : '❌ PAS ENCORE'}`);
+    
+    // Test pour le jour suivant
+    const secondDayUnlock = new Date(START_DATE);
+    secondDayUnlock.setDate(START_DATE.getDate() + 1);
+    secondDayUnlock.setHours(UNLOCK_HOUR, 0, 0, 0);
+    console.log(`   Le 3 août 2025 à ${UNLOCK_HOUR}h00 : ${now >= secondDayUnlock ? '✅ ACCESSIBLE' : '❌ PAS ENCORE'}`);
+    
+    console.log('================================================');
+    console.log('✨ Test terminé ! Vérifiez les résultats ci-dessus.');
+}
+
 // Console Easter Egg
 console.log(`
-💖 Calendrier Magique de Lori 💖
+💖 Petit calendrier pour te faire patienter avant ton cadeau ! 💖
 ================================
-Créé avec amour pour ton anniversaire ✨
+SI TU VOIS CE MESSAGE, C'EST QUE TU AS ACCÉDÉ AU CODE ET C'EST PAS BIEN DU TOUT !!!! 😜
 
 Commandes de développement :
 - resetCalendar() : Réinitialise le calendrier
+- testUnlockSystem() : Teste le système de verrouillage
 - DISABLE_TIME_LOCK : ${DISABLE_TIME_LOCK ? 'Activé' : 'Désactivé'}
+
+Horaires de déverrouillage :
+- 2 août 2025 : 00h00 (première case spéciale)
+- 3-28 août 2025 : ${UNLOCK_HOUR}h00 (cases suivantes)
 
 Bonne exploration ! 🌟
 `);

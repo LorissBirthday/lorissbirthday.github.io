@@ -342,7 +342,7 @@ body::before {
     z-index: 100000;
     background: linear-gradient(45deg, #ff69b4, #ffd700, #ff1493, #ffb6c1);
     background-size: 400% 400%;
-    animation: rainbow-gradient 2s ease-in-out infinite;
+    animation: rainbow-gradient 4s ease-in-out infinite;
     padding: 15px 30px;
     border-radius: 25px;
     box-shadow: 0 10px 30px rgba(255, 105, 180, 0.5);
@@ -355,11 +355,11 @@ body::before {
 .birthday-banner.show {
     opacity: 1;
     visibility: visible;
-    animation: rainbow-gradient 2s ease-in-out infinite, banner-bounce 1s ease-out;
+    animation: rainbow-gradient 4s ease-in-out infinite, banner-bounce 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .birthday-banner.restart {
-    animation: rainbow-gradient 2s ease-in-out infinite, banner-bounce 1s ease-out, banner-pulse 0.5s ease-in-out;
+    animation: rainbow-gradient 4s ease-in-out infinite, banner-bounce 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94), banner-pulse 0.5s ease-in-out;
 }
 
 .birthday-text {
@@ -370,7 +370,7 @@ body::before {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
     margin: 0;
     letter-spacing: 2px;
-    animation: text-glow 2s ease-in-out infinite alternate;
+    animation: text-glow 3s ease-in-out infinite alternate;
 }
 
 @keyframes rainbow-gradient {
@@ -381,10 +381,18 @@ body::before {
 
 @keyframes banner-bounce {
     0% {
-        transform: translateX(-50%) translateY(-100px) scale(0.5);
+        transform: translateX(-50%) translateY(-100px) scale(0.8);
+        opacity: 0;
     }
-    50% {
-        transform: translateX(-50%) translateY(10px) scale(1.1);
+    30% {
+        transform: translateX(-50%) translateY(5px) scale(1.05);
+        opacity: 1;
+    }
+    60% {
+        transform: translateX(-50%) translateY(-3px) scale(1.02);
+    }
+    80% {
+        transform: translateX(-50%) translateY(1px) scale(1.01);
     }
     100% {
         transform: translateX(-50%) translateY(0) scale(1);
