@@ -21,7 +21,7 @@ const hints = {
     14: "Les moments les plus précieux de la vie se savourent lentement, ensemble.",
     15: "Ce que je vais t’offrir touche à la fois les sens et le cœur !",
     16: "Il y a des instants créés sur mesure, juste pour toi.",
-    17: "Dans le jardin des délices, chaque pétale a sa place.",
+    17: "Dans le jardin secret de l'amour, chaque pétale a sa place.",
     18: "Je sais que tu as fait beaucoup de latin au lycée... alors j'ai voulu y faire un petit clin d'œil !",
     19: "Une expérience, un détail, un souvenir : tout est réuni.",
     20: "Ce cadeau ne parle pas fort, mais il en dit long...",
