@@ -1,7 +1,7 @@
 // Configuration
 const DISABLE_TIME_LOCK = false; // Mettre à false pour activer le système de temps
-const START_DATE = new Date('2024-08-02');
-const END_DATE = new Date('2024-08-28');
+const START_DATE = new Date('2025-08-02');
+const END_DATE = new Date('2025-08-28');
 const UNLOCK_HOUR = 10; // 10h du matin
 
 const hints = {
@@ -218,6 +218,11 @@ function openDay(day) {
         launchConfetti();
         showBirthdayBanner();
     }
+    // Pour le 6 août (2 mois), afficher bannière et confettis personnalisés
+    if (day === 5) {
+        launchConfetti();
+        showTwoMonthsBanner();
+    }
 }
 
 function launchConfetti() {
@@ -286,6 +291,29 @@ function showBirthdayBanner() {
     }, 50);
     
     // Supprimer la classe restart après l'animation
+    setTimeout(() => {
+        banner.classList.remove('restart');
+    }, 1500);
+}
+// Bannière spéciale 2 mois
+function showTwoMonthsBanner() {
+    let banner = document.getElementById('two-months-banner');
+    if (!banner) {
+        banner = document.createElement('div');
+        banner.className = 'birthday-banner';
+        banner.id = 'two-months-banner';
+        const text = document.createElement('h1');
+        text.className = 'birthday-text';
+        text.textContent = 'JOYEUX 2 MOIS ! ❤️';
+        banner.appendChild(text);
+        document.body.appendChild(banner);
+    }
+    banner.classList.remove('show', 'restart');
+    banner.offsetHeight; // reflow
+    setTimeout(() => {
+        banner.classList.add('show');
+        if (banner.classList.contains('show')) banner.classList.add('restart');
+    }, 50);
     setTimeout(() => {
         banner.classList.remove('restart');
     }, 1500);
@@ -422,9 +450,9 @@ function setupModal() {
 
 function hideBirthdayBanner() {
     const banner = document.getElementById('birthday-banner');
-    if (banner) {
-        banner.classList.remove('show', 'restart');
-    }
+    if (banner) banner.classList.remove('show', 'restart');
+    const twoBanner = document.getElementById('two-months-banner');
+    if (twoBanner) twoBanner.classList.remove('show', 'restart');
 }
 
 // Animation de bienvenue
