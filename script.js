@@ -59,16 +59,14 @@ function createDayElement(day) {
     dayDiv.dataset.day = day;
     
     const currentDate = new Date();
-    const targetDate = new Date(START_DATE);
-    targetDate.setDate(START_DATE.getDate() + day - 1);
-    
-    // Le premier jour (2 août) se déverrouille à 00h, les autres à 10h
+    // Calcul du moment de déverrouillage
+    const baseDate = new Date(START_DATE);
+    baseDate.setDate(START_DATE.getDate() + day - 1);
     const unlockHour = day === 1 ? 0 : UNLOCK_HOUR;
-    
-    const isUnlocked = DISABLE_TIME_LOCK || (
-        currentDate >= targetDate && 
-        (currentDate.getDate() !== targetDate.getDate() || currentDate.getHours() >= unlockHour)
-    );
+    const unlockDate = new Date(baseDate);
+    unlockDate.setHours(unlockHour, 0, 0, 0);
+    // Date de verrouillage désactivée ou dépassement du moment de déverrouillage
+    const isUnlocked = DISABLE_TIME_LOCK || currentDate >= unlockDate;
     
     const isOpened = openedDays.includes(day);
     
