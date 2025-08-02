@@ -7,7 +7,7 @@ const UNLOCK_HOUR = 10; // 10h du matin
 
 const hints = {
     1: "Ce n’est pas un voyage… et pourtant, d’une certaine manière, ça y ressemble.",
-    2: "Les étoiles brillent plus fort quand on partage leur lumière avec quelqu'un de spécial.",
+    2: "Ce n’est pas juste une surprise. C’est une expérience, pensée pour être partagée à deux.",
     3: "Certains moments méritent d'être célébrés avec raffinement et élégance.",
     4: "La beauté se trouve dans les petits détails...",
     5: "Rien n'a été fait au hasard, j’ai simplement écouté ce que tu aimes, et tout est parti de là.\nJOYEUX 2 MOIS MON AMOUR !!",
